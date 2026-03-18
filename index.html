@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday Madam Jii ❤️</title>
+  <style>
+    :root {
+      --bg: #fff7fb;
+      --primary: #f8cdda;
+      --secondary: #ffd1a9;
+      --accent: #ff70a6;
+      --text: #3a2c3a;
+      --card: #ffffff;
+      --shadow: 0 12px 40px rgba(0,0,0,0.08);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin:0; font-family: "Poppins", "Segoe UI", system-ui, sans-serif;
+      background: radial-gradient(circle at 20% 20%, #ffe1f0, transparent 30%), 
+                  radial-gradient(circle at 80% 0%, #fff2d6, transparent 35%),
+                  var(--bg);
+      color: var(--text);
+      overflow-x:hidden;
+    }
+    button { cursor:pointer; border:none; outline:none; }
+    .center { display:flex; align-items:center; justify-content:center; }
+    /* Opening */
+    #intro {
+      height:100vh; position:relative; overflow:hidden;
+      background: linear-gradient(135deg, #fbe7f4 0%, #fff2e5 100%);
+    }
+    .gift-card {
+      background: var(--card);
+      width: min(90vw, 480px);
+      padding: 40px;
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+      text-align:center;
+      animation: floaty 6s ease-in-out infinite;
+    }
+    .gift-box {
+      width:150px; margin:0 auto 20px;
+      position:relative;
+    }
+    .gift-box .lid {
+      width:150px; height:40px; background:var(--accent);
+      border-radius:12px 12px 8px 8px;
+      animation: lid 3s ease-in-out infinite;
+    }
+    .gift-box .box {
+      width:150px; height:110px; background:var(--primary);
+      border-radius:12px;
+      position:relative; overflow:hidden;
+    }
+    .gift-box .ribbon {
+      position:absolute; top:0; left:70px; width:12px; height:150px;
+      background:#ff4f8b; border-radius:6px;
+    }
+    .gift-card h1 { margin:0 0 12px; letter-spacing:0.5px; }
+    .primary-btn {
+      padding:14px 22px; border-radius:14px; font-weight:600;
+      background: linear-gradient(135deg, #ff9abb, #ff7eb9);
+      color:#fff; box-shadow:0 10px 25px rgba(255,126,185,0.35);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .primary-btn:hover { transform: translateY(-2px); box-shadow:0 12px 30px rgba(255,126,185,0.45); }
+    /* Hero */
+    section { padding:80px 18px; }
+    .hero {
+      min-height:100vh;
+      display:grid; gap:36px;
+      grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));
+      align-items:center;
+    }
+    .hero img {
+      width:100%; border-radius:24px; box-shadow:var(--shadow);
+      object-fit:cover; aspect-ratio: 4/5;
+      animation: fadeIn 1s ease forwards; opacity:0;
+    }
+    .hero-text h2 { font-size: clamp(32px, 4vw, 48px); margin:0 0 12px; }
+    .hero-text p { margin:0 0 16px; font-size:18px; line-height:1.6; }
+    /* Gallery */
+    .gallery {
+      display:grid; gap:18px;
+      grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
+    }
+    .card {
+      position:relative; overflow:hidden; border-radius:18px;
+      box-shadow:var(--shadow); background:var(--card);
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+    .card img { width:100%; height:100%; object-fit:cover; display:block; }
+    .card .caption {
+      position:absolute; inset:0; display:flex; align-items:flex-end;
+      padding:14px; background: linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.45));
+      color:#fff; font-weight:600; letter-spacing:0.2px;
+      opacity:0; transition: opacity .25s ease;
+    }
+    .card:hover { transform: translateY(-6px); box-shadow:0 16px 32px rgba(0,0,0,0.12); }
+    .card:hover .caption { opacity:1; }
+    /* Love buttons */
+    .love-buttons { display:flex; flex-wrap:wrap; gap:12px; }
+    .pill {
+      padding:12px 18px; border-radius:999px; font-weight:600;
+      background: linear-gradient(135deg, #ffd6e8, #ffe6c7);
+      color:#8a3b5c; box-shadow:var(--shadow);
+      transition: transform .2s ease;
+    }
+    .pill:hover { transform: translateY(-2px); }
+    /* Modal */
+    .modal {
+      position:fixed; inset:0; background:rgba(0,0,0,0.4);
+      display:flex; align-items:center; justify-content:center;
+      opacity:0; pointer-events:none; transition: opacity .3s ease;
+      padding:18px; z-index:10;
+    }
+    .modal.active { opacity:1; pointer-events:auto; }
+    .modal-content {
+      background:var(--card); padding:28px; border-radius:18px;
+      max-width:520px; width:100%; text-align:center;
+      box-shadow:var(--shadow); animation: pop .35s ease;
+    }
+    .modal-content h3 { margin-top:0; }
+    .close { margin-top:18px; background:#ffd1e0; color:#7a2448; padding:10px 16px; border-radius:10px; font-weight:600; }
+    /* Final message */
+    .final {
+      text-align:center; max-width:760px; margin:0 auto;
+      font-size:20px; line-height:1.8;
+      animation: fadeUp 1s ease forwards; opacity:0;
+    }
+    /* Floating confetti */
+    .confetti, .balloon {
+      position:fixed; top:-10vh; z-index:5;
+      animation: fall linear infinite;
+      pointer-events:none;
+    }
+    /* Keyframes */
+    @keyframes fadeIn { from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:none;} }
+    @keyframes fadeUp { from{opacity:0; transform:translateY(30px);} to{opacity:1; transform:none;} }
+    @keyframes pop { from{transform:scale(.92);} to{transform:scale(1);} }
+    @keyframes floaty { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
+    @keyframes lid { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
+    @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    /* Responsive tweaks */
+    @media(max-width:700px){ section{padding:64px 14px;} .gift-card{padding:30px;} }
+  </style>
+</head>
+<body>
+  <!-- Intro -->
+  <section id="intro" class="center">
+    <div class="gift-card">
+      <div class="gift-box">
+        <div class="lid"></div>
+        <div class="box"></div>
+        <div class="ribbon"></div>
+      </div>
+      <h1>Someone special has a surprise for you</h1>
+      <p>Ready to open your birthday magic?</p>
+      <button class="primary-btn" id="openBtn">Open Your Gift</button>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main id="main" style="opacity:0; transform:translateY(30px); transition:opacity .8s ease, transform .8s ease;">
+    <section class="hero">
+      <div class="hero-text">
+        <h2>Happy Birthday Madam Jii❤️</h2>
+        <p>25 April 2026 – The day the world got more beautiful.</p>
+        <p>I’m so grateful for every laugh, every late-night chat, and every dream we share.</p>
+      </div>
+      <img src="https://images.unsplash.com/photo-1517840545244-4b3cd4b8d6f7?auto=format&fit=crop&w=900&q=80" alt="Her portrait placeholder" />
+    </section>
+
+    <section>
+      <h3 style="text-align:center; margin-bottom:20px;">Our sweetest moments</h3>
+      <div class="gallery">
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80" alt="Moment 1">
+          <div class="caption">Every smile of yours lights my sky.</div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=900&q=80" alt="Moment 2">
+          <div class="caption">With you, even silence feels like music.</div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1508672019048-805c876b67e2?auto=format&fit=crop&w=900&q=80" alt="Moment 3">
+          <div class="caption">Your laugh is my favorite melody.</div>
+        </div>
+        <div class="card">
+          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=900&q=80" alt="Moment 4">
+          <div class="caption">Every day with you feels like a gift.</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h3 style="text-align:center; margin-bottom:12px;">Press a button when you feel this</h3>
+      <div class="love-buttons">
+        <button class="pill" data-msg="Your smile is the sunrise that makes everything glow.">Click when you smile</button>
+        <button class="pill" data-msg="Close your eyes—I’m right there, holding you close.">Click when you miss me</button>
+        <button class="pill" data-msg="I’ll be your umbrella in every storm; you’ll never face it alone.">Click when you're sad</button>
+        <button class="pill" data-msg="Every heartbeat whispers your name—I’m forever yours.">Click when you feel loved</button>
+      </div>
+    </section>
+
+    <section>
+      <div class="final">
+        <h3 style="font-size:28px; margin-bottom:14px;">My Birthday Wish for You</h3>
+        <p>May your heart stay as kind and bright as it is today. I promise to celebrate every sunrise and every starlit night with you, to dance with you in kitchens, to cheer you on in every dream, and to love you a little more with every single breath.</p>
+        <p style="margin-top:12px; font-weight:700;">Forever yours, with all my love.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <h3>For you 💖</h3>
+      <p id="modalText"></p>
+      <button class="close" id="closeModal">Close</button>
+    </div>
+  </div>
+
+  <script>
+    // Reveal main content
+    const openBtn = document.getElementById('openBtn');
+    const intro = document.getElementById('intro');
+    const main = document.getElementById('main');
+    openBtn.addEventListener('click', () => {
+      intro.style.height = '0';
+      intro.style.padding = '0';
+      intro.style.overflow = 'hidden';
+      main.style.opacity = '1';
+      main.style.transform = 'none';
+      startConfetti();
+      setTimeout(() => intro.remove(), 800);
+    });
+
+    // Modal logic
+    const modal = document.getElementById('modal');
+    const modalText = document.getElementById('modalText');
+    const closeModal = document.getElementById('closeModal');
+    document.querySelectorAll('.pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        modalText.textContent = btn.dataset.msg;
+        modal.classList.add('active');
+      });
+    });
+    closeModal.onclick = () => modal.classList.remove('active');
+    modal.onclick = (e) => { if(e.target === modal) modal.classList.remove('active'); };
+
+    // Confetti & balloons
+    function startConfetti(){
+      for(let i=0;i<26;i++){
+        const c=document.createElement('div');
+        c.className='confetti';
+        const size = Math.random()*10+6;
+        c.style.width = size+'px';
+        c.style.height = size*0.4+'px';
+        c.style.background = ['#ff7eb9','#ffb347','#a29bfe','#81ecec','#f8a5c2'][Math.floor(Math.random()*5)];
+        c.style.left = Math.random()*100+'vw';
+        c.style.animationDuration = 4+Math.random()*3+'s';
+        c.style.animationDelay = Math.random()*2+'s';
+        document.body.appendChild(c);
+      }
+      for(let b=0;b<5;b++){
+        const bal=document.createElement('div');
+        bal.className='balloon';
+        const color = ['#ff9abb','#ffd166','#b28dff','#9ef3c5','#ffc3a0'][Math.floor(Math.random()*5)];
+        bal.style.width='36px'; bal.style.height='44px';
+        bal.style.borderRadius='50% 50% 45% 55%';
+        bal.style.background=color;
+        bal.style.left = (10 + b*16 + Math.random()*8)+'vw';
+        bal.style.animationDuration = 6+Math.random()*4+'s';
+        bal.style.animationDelay = Math.random()*2+'s';
+        bal.style.boxShadow = '0 8px 20px rgba(0,0,0,0.12)';
+        document.body.appendChild(bal);
+      }
+    }
+  </script>
+</body>
+</html>
