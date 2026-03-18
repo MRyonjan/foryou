@@ -17,7 +17,7 @@
     * { box-sizing: border-box; }
     body {
       margin:0; font-family: "Poppins", "Segoe UI", system-ui, sans-serif;
-      background: radial-gradient(circle at 20% 20%, #ffe1f0, transparent 30%), 
+      background: radial-gradient(circle at 20% 20%, #ffe1f0, transparent 30%),
                   radial-gradient(circle at 80% 0%, #fff2d6, transparent 35%),
                   var(--bg);
       color: var(--text); overflow-x:hidden;
@@ -61,6 +61,7 @@
     .cake {
       position:relative; width:220px; height:220px; margin:0 auto;
       transform-style:preserve-3d; animation: floaty 6s ease-in-out infinite;
+      cursor:pointer;
     }
     .cake .plate {
       position:absolute; bottom:0; left:50%; transform:translateX(-50%);
@@ -140,7 +141,7 @@
     @keyframes floaty { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-10px);} }
     @keyframes lid { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-6px);} }
     @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
-    @keyframes flicker { 
+    @keyframes flicker {
       0% { transform: translate(-50%,0) scale(1); opacity:0.92; }
       50% { transform: translate(-50%,-2px) scale(1.04); opacity:1; }
       100% { transform: translate(-50%,1px) scale(0.96); opacity:0.9; }
@@ -173,7 +174,7 @@
         <p>I’m so grateful for every laugh, every late-night chat, and every dream we share.</p>
 
         <div class="cake-wrap">
-          <div class="cake">
+          <div class="cake" id="wishCake" title="Tap to make a wish">
             <div class="plate"></div>
             <div class="layer top">
               <div class="drip"></div>
@@ -261,13 +262,21 @@
     const modalText = document.getElementById('modalText');
     const closeModal = document.getElementById('closeModal');
     document.querySelectorAll('.pill').forEach(btn => {
-      btn.addEventListener('click', () => {
-        modalText.textContent = btn.dataset.msg;
-        modal.classList.add('active');
-      });
+      btn.addEventListener('click', () => openModal(btn.dataset.msg));
     });
     closeModal.onclick = () => modal.classList.remove('active');
     modal.onclick = (e) => { if(e.target === modal) modal.classList.remove('active'); };
+
+    function openModal(message){
+      modalText.textContent = message;
+      modal.classList.add('active');
+    }
+
+    // Wish cake click -> special wish message
+    const wishCake = document.getElementById('wishCake');
+    wishCake.addEventListener('click', () => {
+      openModal("Your Wish is fulfilled, I'm yours Madam jii !!");
+    });
 
     // Confetti & balloons
     function startConfetti(){
